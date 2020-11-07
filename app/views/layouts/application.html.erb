@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>FurnitureMarketplace</title>
+    <title>Furniture Land</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +10,8 @@
   </head>
 
   <body>
+    <%= render "shared/navbar"%>
+    <p class="alert"><%= alert %></p>
     <%= yield %>
   </body>
 </html>
