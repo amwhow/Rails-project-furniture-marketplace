@@ -1,6 +1,20 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listings</h1>
+<h1 class="listing">Listings</h1>
+
+<div class="row justify-content-around">
+  <% @listings.each do |listing| %>
+    <div class="card col-sm-3 mx-1 my-4">
+      <%= image_tag "home", class:"card-img-top", alt:"listing preview image" %>
+      <div class="card-body">
+        <h5 class="card-title">Dining table and others</h5>
+        <p class="card-text">Delivery: <%= listing.delivery %></p>
+        <p class="card-text">Location: <%= listing.location %></p>
+        <a href="#" class="btn btn-primary">See details</a>
+      </div>
+    </div>
+  <% end %>
+</div>
 
 <table>
   <thead>

@@ -7,7 +7,7 @@
       <h1 class="display-4"><%= "Hello, #{current_user.email}"%><h1>
       <p class="lead">Welcome to Furniture Land, feel free tocheckout our listings and get your desired furniture home!<p>
       <hr class="my-4">
-      <a class="btn btn-primary btn-lg" href="#"role="button">See listings</a>
+      <%= link_to "See listings", listings_path, class: "btn btn-primary btn-lg", role:"button"%>
     </div>
   </div>
 </div>
