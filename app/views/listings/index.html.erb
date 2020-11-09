@@ -6,9 +6,9 @@
   <% @listings.each do |listing| %>
     <div class="card col-sm-3 mx-1 my-4">
       <% if listing.images.attached? %>
-        <%= image_tag listing.images.first, class:"card-img-top", alt:"listing preview image" %>
+        <%= image_tag listing.images.first, class:"card-img-top", alt:"listing preview image", width: "250", height: "350"%>
       <% else %>
-        <%= image_tag "logo", class:"card-img-top", alt:"listing preview image" %>
+        <%= image_tag "logo", class:"card-img-top", alt:"listing preview image", width: "250", height: "350"%>
       <% end %>
       <div class="card-body">
         <h5 class="card-title"><%= listing.title %></h5>
