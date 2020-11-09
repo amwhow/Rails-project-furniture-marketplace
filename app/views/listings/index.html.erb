@@ -5,7 +5,11 @@
 <div class="row justify-content-around">
   <% @listings.each do |listing| %>
     <div class="card col-sm-3 mx-1 my-4">
-      <%= image_tag "home.jpg", class:"card-img-top", alt:"listing preview image" %>
+      <% if listing.images.attached? %>
+        <%= image_tag listing.images.first, class:"card-img-top", alt:"listing preview image" %>
+      <% else %>
+        <%= image_tag "logo", class:"card-img-top", alt:"listing preview image" %>
+      <% end %>
       <div class="card-body">
         <h5 class="card-title"><%= listing.title %></h5>
         <p class="card-text">Price: <%= listing.price %></p>
