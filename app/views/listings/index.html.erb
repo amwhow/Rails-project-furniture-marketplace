@@ -15,8 +15,7 @@
         <p class="card-text">Price: <%= listing.price %></p>
         <p class="card-text">Delivery: <%= listing.delivery %></p>
         <p class="card-text">Location: <%= listing.location %></p>
-        <%= link_to 'See datails', listing_path(listing.id) %>
-        <%# <a href="#" class="btn btn-primary">See details</a> %>
+        <%= link_to 'See datails', listing_path(listing.id), class: "btn btn-primary" %>
       </div>
     </div>
   <% end %>
