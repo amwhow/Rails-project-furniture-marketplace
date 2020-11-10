@@ -10,5 +10,9 @@
   <%= @listing.location %>
 </p>
 
+<div style="height: 500px" id="map"></div>
+<%= javascript_pack_tag "leaflet/show" %>
+<%# <h2>Nearby listings (within 50kms)</h2> %>
+
 <%= link_to 'Edit', edit_listing_path(@listing) %> |
 <%= link_to 'Back', listings_path %>

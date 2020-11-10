@@ -63,3 +63,5 @@ gem "devise", "~> 4.7"
 
 
 gem "carrierwave", "~> 2.1"
+
+gem "geocoder", "~> 1.6"

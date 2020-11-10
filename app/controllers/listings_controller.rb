@@ -5,11 +5,24 @@ class ListingsController < ApplicationController
   # GET /listings.json
   def index
     @listings = Listing.all
+    if params[:type] == "json"
+      data = @listings.map do |listing|
+        [listing.latitude, listing.longitude]
+      end 
+      render json: {data: data, center: [data[0][0], data[0][1]]}
+    end
   end
 
   # GET /listings/1
   # GET /listings/1.json
   def show
+    @listing = Listing.find(params[:id])
+    # @proximity = Listing.near([@listing.latitude, @listing.longitude], 50)
+    # @proximity.length > 1 ? "There are #{@proximity.length - 1} listings within 50kms" : "There are no listing nearby"
+    if params[:type] == "json"
+      render json: {data: [@listing.latitude, @listing.longitude], center: [@listing.latitude, @listing.longitude]}
+    end
+    
   end
 
   # GET /listings/new
