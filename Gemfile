@@ -60,8 +60,5 @@ gem 'bootstrap', '~> 4.5.2'
 gem 'jquery-rails'
 gem "simple_form", "~> 5.0"
 gem "devise", "~> 4.7"
-
-
 gem "carrierwave", "~> 2.1"
-
 gem "geocoder", "~> 1.6"
