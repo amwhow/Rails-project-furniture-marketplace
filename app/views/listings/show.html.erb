@@ -1,3 +1,5 @@
+<%# modal here %>
+
 <p id="notice"><%= notice %></p>
 
 <div class="row d-flex justify-content-center">
@@ -26,10 +28,6 @@
         <span class="sr-only">Next</span>
       </a>
     </div>
-    <%# <p> %>
-      <%# @listing.images.each do |image| %>
-        <%# image_tag image, width: "300" %>
-      <%# end%>
 
     <%# listing details %>
     <div class="col-md-3">
@@ -53,7 +51,11 @@
       </p>
       <p>
         <h5>Delivery:
-        <%= @listing.delivery %>
+        <% if @listing.delivery == true %>
+          available
+        <% else %>
+          not available
+        <% end %>
         </h5>
       </p>
       <p>
@@ -73,15 +75,15 @@
         <h5>Seller Information</h5>
         <%# use bootstrap here to have user info pop up %>
         <%= image_tag @listing.user.avatar, size:"40x40" %>
-        <%= @listing.user.name %>
-        <p>has
+        <%= @listing.user.name %>&nbsp&nbsp&nbsp&nbsp&nbsp
+        <span>has
         <%= @listing.user.listings.length%> 
         <% if @listing.user.listings.length <= 1 %> 
           post 
         <% else %>
           posts 
         <% end %>
-        </p>
+        </span>
 
         <h5>Contact Seller</h5>
         <input type="text" placeholder="send seller a message">

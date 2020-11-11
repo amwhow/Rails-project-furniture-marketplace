@@ -4,7 +4,12 @@ class ListingsController < ApplicationController
   # GET /listings
   # GET /listings.json
   def index
-    @listings = Listing.all
+    if params[:search].present?
+      @listings = Listing.search_by_title(params[:search][:title])
+    else
+      @listings = Listing.all
+    end
+
     if params[:type] == "json"
       data = @listings.map do |listing|
         [listing.latitude, listing.longitude]
@@ -83,6 +88,6 @@ class ListingsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def listing_params
-      params.require(:listing).permit(:delivery, :location, :description, :price, :title, :condition, images: [])
+      params.require(:listing).permit(:delivery, :location, :description, :price, :title, :condition, :search, images: [])
     end
 end

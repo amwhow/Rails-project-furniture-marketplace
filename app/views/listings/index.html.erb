@@ -1,25 +1,40 @@
 <p id="notice"><%= notice %></p>
 
-<h1 class="listing">Listings</h1>
+<%= form_with(scope: :search, url: listings_path, method: 'get', local: true) do |f|%>
+  <div class="row justify-content-center" >
+    <%= f.text_field :title, class:"form-control mr-sm-4", type: "search", placeholder: "I am looking for...", style: "margin-bottom: 20px";%>
+    <%= f.submit "Search", class:"btn btn-primary" %>
+  </div>
+<% end %>
 
-<div class="row justify-content-around">
-  <% @listings.each do |listing| %>
-    <div class="card col-sm-3 mx-1 my-4">
-      <% if listing.images.attached? %>
-        <%= image_tag listing.images.first, class:"card-img-top", alt:"listing preview image", width: "250", height: "350"%>
-      <% else %>
-        <%= image_tag "logo", class:"card-img-top", alt:"listing preview image", width: "250", height: "350"%>
-      <% end %>
-      <div class="card-body">
-        <h5 class="card-title"><%= listing.title %></h5>
-        <p class="card-text">Price: <%= listing.price %></p>
-        <p class="card-text">Delivery: <%= listing.delivery %></p>
-        <p class="card-text">Location: <%= listing.location %></p>
-        <%= link_to 'See datails', listing_path(listing.id), class: "btn btn-primary" %>
+<% if params[:search].present? %>
+  <%= link_to "Back", listings_path, class: "btn btn-primary",role: "button" %>
+<% end %>
+
+  <div class="row justify-content-around">
+    <% @listings.each do |listing| %>
+      <div class="card col-sm-3 mx-1 my-4">
+        <% if listing.images.attached? %>
+          <%= image_tag listing.images.first, class:"card-img-top", alt:"listing preview image", width: "250" %>
+        <% else %>
+          <%= image_tag "logo", class:"card-img-top", alt:"listing preview image", width: "250" %>
+        <% end %>
+        <div class="card-body">
+          <h5 class="card-title"><%= listing.title %></h5>
+          <p class="card-text">Price: <%= listing.price %></p>
+          <p class="card-text">Delivery: 
+          <% if listing.delivery == true %>
+            available
+          <% else %>
+            not available
+          <% end %>
+          </p>
+          <p class="card-text">Location: <%= listing.location %></p>
+          <%= link_to 'See datails', listing_path(listing.id), class: "btn btn-primary" %>
+        </div>
       </div>
-    </div>
-  <% end %>
-</div>
+    <% end %>
+  </div>
 
 <table>
   <thead>
