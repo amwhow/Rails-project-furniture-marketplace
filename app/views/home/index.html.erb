@@ -4,7 +4,7 @@
         <%= image_tag "home", class: "img-fluid" %>
       </div>
       <div class="col-md-6 align-middle">
-        <h1 class="display-4"><%= "Hello, #{current_user.email}"%><h1>
+        <h1 class="display-4"><%= "Hello, #{current_user.name}"%><h1>
         <p class="lead">Welcome to Furniture Land, feel free tocheckout our listings and get your desired furniture home!<p>
         <hr class="my-4">
         <%= link_to "See listings", listings_path, class: "btn btn-primary btn-lg", role:"button"%>
