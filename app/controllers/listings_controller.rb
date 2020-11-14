@@ -6,6 +6,8 @@ class ListingsController < ApplicationController
   def index
     if params[:search].present?
       @listings = Listing.search_by_title(params[:search][:title])
+    elsif params[:user].present?
+      @listings = current_user.listings 
     else
       @listings = Listing.all
     end
