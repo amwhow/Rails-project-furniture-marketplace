@@ -1,25 +1,32 @@
-<div class="row d-flex justify-content-center">
-  <div class="col-md-5">
-    <%= simple_form_for(@listing) do |f| %>
-      <%= f.error_notification %>
-      <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+  <div class="row d-flex justify-content-center">
+    <div class="col-md-5">
+      <%= simple_form_for(@listing) do |f| %>
+        <%= f.error_notification %>
+        <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-      <div class="form-inputs">
-        <%= f.input :title, placeholder: "Describe your items here" %>
-        <%= f.input :price, as: :decimal, placeholder: "A$", input_html: { min: '0' } %>
-        <%= f.input :condition, as: :select, collection: [['brand new', 'brand new'], ['like new', 'like new'], ['good condition', 'good condition'], ['fair condition', 'fair condition']] %>
-        <%= f.input :description, :input_html => {:rows => 7}, placeholder: "In 300 words" %>
-        <%= f.input :location, placeholder: "format: street, city, country"%>
-        <%= f.input :delivery %>
-        <%= f.label :images %><br>
-        <%= f.file_field :images, multiple: true %>
-        <br>
-        <br>
+        <div class="form-inputs">
+          <%= f.input :title, placeholder: "Describe your items here" %>
+          <%= f.input :price, as: :decimal, placeholder: "A$", input_html: { min: '0' } %>
 
-      </div>
+          <%# select multiple categories and pass them into the listing %>
+          <%= f.label "Category(select one or more)"%>
+          <%= f.collection_check_boxes :category_ids, ['seating', 'sleeping/lying', 'entertainment', 'table', 'storage', 'appliance', 'other'], :id, :name%>
 
-      <div class="form-actions">
-        <%= f.button :submit %>
-      </div>
-    <% end %>
+          <%= f.input :condition, as: :select, collection: [['brand new', 'brand new'], ['like new', 'like new'], ['good condition', 'good condition'], ['fair condition', 'fair condition']] %>
+          <%= f.input :description, :input_html => {:rows => 7}, placeholder: "In 300 words" %>
+          <%= f.input :location, placeholder: "format: street, city, country"%>
+          <%= f.input :delivery %>
+          <%= f.label :images %><br>
+          <%= f.file_field :images, multiple: true%>
+          <br>
+          <br>
+
+        </div>
+
+        <div class="form-actions">
+          <%= f.button :submit, class: "btn btn-primary"%>
+        </div>
+      <% end %>
+    </div>
   </div>
+
