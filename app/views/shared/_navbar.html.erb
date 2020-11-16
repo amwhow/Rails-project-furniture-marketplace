@@ -13,24 +13,27 @@
         <a class="nav-link" href="#">Buy<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <%= link_to 'New Listing', new_listing_path, class:"nav-link" %>
+        <a class="nav-link" href="#">Sell</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Contact
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
       </li>
     </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
     <% if user_signed_in? %>
-      <span class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role= "button" data-toggle= "dropdown" aria-haspopup="true" aria-expanded= "false" >
-          <%= current_user.name %>
-        </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <%= link_to "My Listings", listings_path(scope: :user, user: current_user.id), class: "dropdown-item" %>
-            <%# <a class="dropdown-item" href="#">My Listings</a> %>
-            <a class="dropdown-item" href="#">Messages</a>
-            <div class="dropdown-divider"></div>
-            <%# <a class="dropdown-item" href="#">My Account</a> %>
-            <%= link_to "My Account", edit_user_registration_path, class: "dropdown-item",role: "button" %>
-            <%= link_to "Logout", destroy_user_session_path, method: "delete", class: "dropdown-item",role: "button" %>
-          </div>
-      </span>
+      <%= link_to "Log out", destroy_user_session_path, method: "delete", class: "btn btn-success",role: "button" %>
+      <%= link_to current_user.name, edit_user_registration_path, role: "button" %>
     <% else %>
       <button type="button" class="btn btn-success">Sign in</button>
       <button type="button" class="btn btn-success">Sign up</button>

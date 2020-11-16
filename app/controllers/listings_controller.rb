@@ -6,8 +6,6 @@ class ListingsController < ApplicationController
   def index
     if params[:search].present?
       @listings = Listing.search_by_title(params[:search][:title])
-    elsif params[:user].present?
-      @listings = current_user.listings 
     else
       @listings = Listing.all
     end
@@ -90,6 +88,6 @@ class ListingsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def listing_params
-      params.require(:listing).permit(:delivery, :location, :description, :price, :title, :condition, :search, category_ids:[], images: [])
+      params.require(:listing).permit(:delivery, :location, :description, :price, :title, :condition, :search, images: [])
     end
 end

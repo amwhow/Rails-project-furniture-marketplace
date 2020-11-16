@@ -1,26 +1,5 @@
 <%# modal here %>
-<div class="modal fade" id="showuserlistingModal" tabindex="-1" role="dialog" aria-labelledby="showuserlistingModalTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle"><%= @listing.user.name %>'s listings:
-        </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid">          
-          <% @listing.user.listings.each do |listing| %>
-            <p><%= link_to listing.title, listing_path(listing.id)%></p>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
-<%# main section %>
 <p id="notice"><%= notice %></p>
 
 <div class="row d-flex justify-content-center">
@@ -30,27 +9,24 @@
         <% @listing.images.each_with_index do |image, index| %>
           <% if index < 1 %>
             <div class="carousel-item active">
-              <%= image_tag image, class: "d-block", alt: "slide #{index + 1}", width: "500"%>
+              <%= image_tag image, class: "d-block w-100", alt: "slide #{index + 1}", width: "500"%>
             </div>
           <% else %>
+            <% p "This is the second image"%>
             <div class="carousel-item">
-              <%= image_tag image, class: "d-block", alt: "slide #{index + 1}", width: "500"%>
+              <%= image_tag image, class: "d-block w-100", alt: "slide #{index + 1}", width: "500"%>
             </div>
           <% end %>
         <% end %>
       </div>
-
-      <%# no arrow appear if only one image %>
-      <% if @listing.images.length != 1 %>
-        <a class="carousel-control-prev" href="#carouselExampleControls"role="button" data-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleControls"role="button" data-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
-      <% end %>
+      <a class="carousel-control-prev" href="#carouselExampleControls"role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleControls"role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
     </div>
 
     <%# listing details %>
@@ -58,9 +34,9 @@
       <h1>
         <span><%= @listing.title %> 
         <% if @listing.user_id == current_user.id %>
-          <%= link_to "Edit", edit_listing_path(@listing), class: "btn btn-primary",role: "button" %> 
+          <%= link_to "Edit", edit_listing_path(@listing), class: "btn btn-success",role: "button" %> 
         <% end %>
-        <%= link_to 'Back', listings_path, class: "btn btn-primary",role: "button"%>
+        <%= link_to 'Back', listings_path, class: "btn btn-success",role: "button"%>
         </span>
       </h1>
       <p>
@@ -97,16 +73,17 @@
 
       <div class="seller_info">
         <h5>Seller Information</h5>
+        <%# use bootstrap here to have user info pop up %>
         <%= image_tag @listing.user.avatar, size:"40x40" %>
         <%= @listing.user.name %>&nbsp&nbsp&nbsp&nbsp&nbsp
-
-        <%# plural control %>
-        <%# link_to "has #{@listing.user.listings.length} #{@listing.user.listings.length <= 1 ? "post" : "posts"}", class: "btn btn-primary", role: "button", {'data-toggle' => 'modal', 'data-target' => '#showuserlistingModal'} %>
-
-        <%# link to a user's posts(in a pop-up) %>
-        <a role="button" class="badge" data-toggle="modal" data-target="#showuserlistingModal">
-          <%= "has #{@listing.user.listings.length} #{@listing.user.listings.length <= 1 ? "post" : "posts"}" %>
-        </a>
+        <span>has
+        <%= @listing.user.listings.length%> 
+        <% if @listing.user.listings.length <= 1 %> 
+          post 
+        <% else %>
+          posts 
+        <% end %>
+        </span>
 
         <h5>Contact Seller</h5>
         <input type="text" placeholder="send seller a message">
