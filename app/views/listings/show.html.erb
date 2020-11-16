@@ -97,7 +97,11 @@
 
       <div class="seller_info">
         <h5>Seller Information</h5>
-        <%= image_tag @listing.user.avatar, size:"40x40" %>
+        <% if @listing.user.avatar.attached? %>
+          <%= image_tag @listing.user.avatar, size:"40x40" %>
+        <% else %>
+          <%= image_tag "user", size:"40x40" %>
+        <% end %>
         <%= @listing.user.name %>&nbsp&nbsp&nbsp&nbsp&nbsp
 
         <%# plural control %>
