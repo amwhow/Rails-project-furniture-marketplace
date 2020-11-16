@@ -22,6 +22,8 @@
           <%= current_user.name %>
         </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+            <%# go to listing index page with a unique scope so that the view can use if statements to show relevant content %>
             <%= link_to "My Listings", listings_path(scope: :user, user: current_user.id), class: "dropdown-item" %>
             <%# <a class="dropdown-item" href="#">My Listings</a> %>
             <a class="dropdown-item" href="#">Messages</a>

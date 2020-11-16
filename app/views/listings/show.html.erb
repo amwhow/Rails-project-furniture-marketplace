@@ -59,6 +59,8 @@
         <span><%= @listing.title %> 
         <% if @listing.user_id == current_user.id %>
           <%= link_to "Edit", edit_listing_path(@listing), class: "btn btn-primary",role: "button" %> 
+        <% else %>
+          <%= %>
         <% end %>
         <%= link_to 'Back', listings_path, class: "btn btn-primary",role: "button"%>
         </span>

@@ -25,13 +25,13 @@
                 required: true,
                 input_html: { autocomplete: "current-password" } %>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Update", class:"btn btn-primary" %>
+  <div class="row">
+    <div class="form-actions">
+      &nbsp&nbsp&nbsp&nbsp<%= f.button :submit, "Update", class:"btn btn-primary" %>&nbsp&nbsp&nbsp
+    </div>
+    <% end %>
+    <p><%= link_to "Back", :back, class:"btn btn-primary" %></p>
   </div>
-<% end %>
 
-<p><%= link_to "Delete my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-
-<%= link_to "Back", :back %>
+<p><%= link_to "Delete my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class:"btn btn-danger"%></p>
 </div>
