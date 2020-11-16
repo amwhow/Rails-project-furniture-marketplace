@@ -1,0 +1,53 @@
+<div class="row justify-content-start">
+
+<%# query to a user's saved listings %>
+<% if Savelisting.where(user_id:current_user.id).exists? %>
+  <% Savelisting.where(user_id:current_user.id).each do |record| %>
+    <% @saved_listings = Listing.where(id:(record.listing_id)) %>
+  
+    <%# show a user's saved listings %>
+    <% @saved_listings.each do |listing| %>
+      <%# repetitive to listing index page %>
+      <div class="card col-sm-3  my-2">
+        <% if listing.images.attached? %>
+          <%= image_tag listing.images.first, class:"card-img-top", alt:"listing previewimage", width: "250" %>
+        <% else %>
+          <%= image_tag "logo", class:"card-img-top", alt:"listing preview image",width: "250" %>
+        <% end %>
+          <div class="card-body">
+            <h5 class="card-title"><%= listing.title %></h5>
+            <p class="card-text">Price: <%= listing.price %></p>
+            <p class="card-text">Delivery: 
+              <% if listing.delivery == true %>
+                available
+              <% else %>
+                not available
+              <% end %>
+            </p>
+            <p class="card-text">Location: <%= listing.location %></p>
+            <p class="card-text">Created at: <%= listing.created_at.to_date %></p>
+            <div class="row justify-content-between">
+              <div class="column-sm-6">
+                <%= link_to 'See datails', listing_path(listing.id), class: "btn btn-primary"%>
+              </div>
+              <div class="column-sm-6">
+                <% saved_or_not = listing.savelistings.find_by_user_id(current_user.id)%>
+                  <% if saved_or_not %>
+                    <%= button_to 'Unsave'.html_safe, listing_savelisting_path(listing, saved_or_not), method: "delete"%>
+                  <% else %>
+                    <%= button_to 'Save'.html_safe, listing_savelistings_path(listing), method: "post" %>
+                  <% end %>
+              </div>
+            </div>
+            <% if listing.user_id == current_user.id %>
+              <div class="column-sm-6">
+                <%= link_to (image_tag 'edit_icon'), edit_listing_path(listing) %>
+                <%= link_to (image_tag 'delete_icon'), listing, method: :delete, data: { confirm: 'Are you sure?' }  %>
+              </div>
+            <% end %>
+          </div>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+</div>
