@@ -4,6 +4,7 @@ class SavelistingsController < ApplicationController
 
   def create 
     @listing.savelistings.create(user_id: current_user.id)
+    redirect_to @listing
   end 
 
   def destroy
@@ -12,6 +13,7 @@ class SavelistingsController < ApplicationController
     else
       @savelisting.destroy
     end
+    redirect_to @listing
   end
 
   private 

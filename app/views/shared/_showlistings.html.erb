@@ -8,7 +8,7 @@
     <%# show a user's saved listings %>
     <% @saved_listings.each do |listing| %>
       <%# repetitive to listing index page %>
-      <div class="card col-sm-3  my-2">
+      <div class="card col-sm-4  my-2">
         <% if listing.images.attached? %>
           <%= image_tag listing.images.first, class:"card-img-top", alt:"listing previewimage", width: "250" %>
         <% else %>
@@ -30,14 +30,7 @@
               <div class="column-sm-6">
                 <%= link_to 'See datails', listing_path(listing.id), class: "btn btn-primary"%>
               </div>
-              <div class="column-sm-6">
-                <% saved_or_not = listing.savelistings.find_by_user_id(current_user.id)%>
-                  <% if saved_or_not %>
-                    <%= button_to 'Unsave'.html_safe, listing_savelisting_path(listing, saved_or_not), method: "delete"%>
-                  <% else %>
-                    <%= button_to 'Save'.html_safe, listing_savelistings_path(listing), method: "post" %>
-                  <% end %>
-              </div>
+              
             </div>
             <% if listing.user_id == current_user.id %>
               <div class="column-sm-6">

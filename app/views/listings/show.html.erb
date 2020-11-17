@@ -63,9 +63,9 @@
           <%# save listing function %>
           <% saved_or_not = @listing.savelistings.find_by_user_id(current_user.id)%>
           <% if saved_or_not %>
-            <%= button_to 'Unsave'.html_safe, listing_savelisting_path(@listing, saved_or_not), method: "delete"%>
+            <%= link_to (image_tag 'unsave_icon'), listing_savelisting_path(@listing, saved_or_not), method: "delete" %>
           <% else %>
-            <%= button_to 'Save'.html_safe, listing_savelistings_path(@listing), method: "post" %>
+            <%= link_to (image_tag 'save_icon'), listing_savelistings_path(@listing), method: "post" %>
           <% end %>
         <% end %>
         <%= link_to 'Back', listings_path, class: "btn btn-primary",role: "button"%>
