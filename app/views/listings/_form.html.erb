@@ -14,6 +14,7 @@
           <%= f.input :description, :input_html => {:rows => 7}, placeholder: "In 300 words" %>
           <%= f.input :location, placeholder: "format: street, city, country"%>
           <%= f.input :delivery %>
+          <%= f.input :phone, placeholder: "Australian phone only", input_html: { min: '8', max: '12' }%>
           <%= f.label :images %><br>
           <%= f.file_field :images, multiple: true%>
           <br>

@@ -25,10 +25,11 @@
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <%# go to listing index page with a unique scope so that the view can use if statements to show relevant content %>
             <%= link_to "My Listings", listings_path(scope: :user, user: current_user.id), class: "dropdown-item" %>
-            <%# <a class="dropdown-item" href="#">My Listings</a> %>
-            <a class="dropdown-item" href="#">Messages</a>
-            <div class="dropdown-divider"></div>
-            <%# <a class="dropdown-item" href="#">My Account</a> %>
+            
+            <%# for future build %>
+            <%# <a class="dropdown-item" href="#">Messages</a>
+            <div class="dropdown-divider"></div> %>
+
             <%= link_to "My Account", edit_user_registration_path, class: "dropdown-item",role: "button" %>
             <%= link_to "Logout", destroy_user_session_path, method: "delete", class: "dropdown-item",role: "button" %>
           </div>

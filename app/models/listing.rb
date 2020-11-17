@@ -1,4 +1,6 @@
 class Listing < ApplicationRecord
+  validates :phone, length: { in: 8..12 }
+
   has_many :listing_categories
   has_many :categories, through: :listing_categories
   belongs_to :user
@@ -6,6 +8,6 @@ class Listing < ApplicationRecord
   geocoded_by :location
   after_validation :geocode
   has_many :savelistings, dependent: :destroy
-
   scope :search_by_title, -> (title) {where('title ILIKE ?', "%#{title}%") }
+
 end
