@@ -1,5 +1,6 @@
 class Listing < ApplicationRecord
   validates :phone, length: { in: 8..12 }
+  validates :title, presence: true
 
   has_many :listing_categories
   has_many :categories, through: :listing_categories
