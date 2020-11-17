@@ -8,6 +8,8 @@ class ListingsController < ApplicationController
       @listings = Listing.search_by_title(params[:search][:title])
     elsif params[:user].present?
       @listings = current_user.listings 
+    elsif params[:cat_name].present?
+      @listings = Category.find_by_name(params[:cat_name]).listings
     else
       @listings = Listing.all
     end

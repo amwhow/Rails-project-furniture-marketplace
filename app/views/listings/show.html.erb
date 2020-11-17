@@ -72,6 +72,13 @@
         </span>
       </h1>
       <p>
+        <h5>Category:
+          <% @listing.categories.each do |category| %>
+          <%= link_to category.name.capitalize, listings_path(scope: :cat_name, cat_name: category.name) %>
+          <% end %>
+        </h5>
+      </p>
+      <p>
         <h5>Price:
         $<%= @listing.price %>
         </h5>
@@ -111,9 +118,6 @@
           <%= image_tag "user", size:"40x40" %>
         <% end %>
         <%= @listing.user.name %>&nbsp&nbsp&nbsp&nbsp&nbsp
-
-        <%# plural control %>
-        <%# link_to "has #{@listing.user.listings.length} #{@listing.user.listings.length <= 1 ? "post" : "posts"}", class: "btn btn-primary", role: "button", {'data-toggle' => 'modal', 'data-target' => '#showuserlistingModal'} %>
 
         <%# link to a user's posts(in a pop-up) %>
         <a role="button" class="badge" data-toggle="modal" data-target="#showuserlistingModal">

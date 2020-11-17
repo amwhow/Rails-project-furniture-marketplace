@@ -2,7 +2,6 @@
   <p id="notice"><%= notice %></p>
 
   <%# search bar %>
-
   <h1 class="text-center">Up for anything? Search it here!</h1>
   <br>
   <%= form_with(scope: :search, url: listings_path, method: 'get', local: true) do |f|%>
@@ -12,55 +11,68 @@
     </div>
   <% end %>
 
-  <% if params[:user].present? %>
     <br>
     <br>
-    <h1 class="text-center">My listings</h1>
+    <% if params[:user].present? %>
+      <h1 class="text-center">My listings</h1>
+    <% elsif params[:cat_name].present? %>
+      <h1 class="text-center">Listings under "<%= params[:cat_name].capitalize %>" Category</h1>
+    <% end %>
     <br>
     <br>
-  <% end %>
 
   <%# listings section %>
   <div class="row justify-content-start">
     <% @listings.each do |listing| %>
-      <div class="card col-sm-3  my-2">
-        <% if listing.images.attached? %>
-          <%= image_tag listing.images.first, class:"card-img-top", alt:"listing previewimage", width: "250" %>
-        <% else %>
-          <%= image_tag "logo", class:"card-img-top", alt:"listing preview image",width: "250" %>
-        <% end %>
-        <div class="card-body">
-          <h5 class="card-title"><%= listing.title %></h5>
-          <p class="card-text">Price: <%= listing.price %></p>
-          <p class="card-text">Delivery: 
-          <% if listing.delivery == true %>
-            available
+      <div class="card col-sm-4 my-2">
+        <%# row for main card content %>
+  
+          <% if listing.images.attached? %>
+            <%= image_tag listing.images.first, class:"card-img-top", alt:"listing previewimage", width: "250" %>
           <% else %>
-            not available
+            <%= image_tag "no_image", class:"card-img-top", alt:"listing preview image",width: "250" %>
           <% end %>
-          </p>
-          <p class="card-text">Location: <%= listing.location %></p>
-          <p class="card-text">Created at: <%= listing.created_at.to_date %></p>
-          <div class="row justify-content-between">
-            <div class="column-sm-6">
-              <%= link_to 'See datails', listing_path(listing.id), class: "btn btn-primary"%>
-            </div>
-            <% if listing.user_id == current_user.id %>
-              <div class="column-sm-6">
-                <%= link_to (image_tag 'edit_icon'), edit_listing_path(listing) %>
-                <%= link_to (image_tag 'delete_icon'), listing, method: :delete, data: { confirm: 'Are you sure?' }  %>
-              </div>
+          <div class="card-body col-sm-12">
+            <h5 class="card-title"><%= listing.title %></h5>
+            <p> 
+            Category:
+            <% listing.categories.each do |category| %>
+            <%= link_to category.name.capitalize, listings_path(scope: :cat_name, cat_name: category.name) %>
             <% end %>
+            </p>
+            <p class="card-text">Price: <%= listing.price %></p>
+            <p class="card-text">Delivery: 
+            <% if listing.delivery == true %>
+              available
+            <% else %>
+              not available
+            <% end %>
+            </p>
+            <p class="card-text">Location: <%= listing.location %></p>
+            <p class="card-text">Created at: <%= listing.created_at.to_date %></p>
+
+          <%# row for bottom buttons %>
+            <div class="row justify-content-between align-items-end">
+              <div class="column-sm-6">
+                <%= link_to 'See datails', listing_path(listing.id), class: "btn btn-primary"%>
+              </div>
+              <% if listing.user_id == current_user.id %>
+                <div class="column-sm-6">
+                  <%= link_to (image_tag 'edit_icon'), edit_listing_path(listing) %>
+                  <%= link_to (image_tag 'delete_icon'), listing, method: :delete, data: { confirm: 'Are you sure?' }  %>
+                </div>
+              <% end %>
+            </div>
           </div>
-        </div>
       </div>
     <% end %>
   </div>
 
   <br>
   <br>
+  <%# go back to home page %>
   <div class="row justify-content-center">
-      <% if params[:search].present? %>
+      <% if params[:search].present? || params[:cat_name].present? %>
         <%= link_to "Back", listings_path, class: "btn btn-primary",role: "button" %>
       <% end %>
   </div>

@@ -10,7 +10,8 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#">Buy<span class="sr-only">(current)</span></a>
+        <%= link_to "See Listings", listings_path, class:"nav-link" %>
+        <%# <a class="nav-link" href="#">See Listings<span class="sr-only">(current)</span></a> %>
       </li>
       <li class="nav-item">
         <%= link_to 'New Listing', new_listing_path, class:"nav-link" %>
@@ -22,7 +23,6 @@
           <%= current_user.name %>
         </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-
             <%# go to listing index page with a unique scope so that the view can use if statements to show relevant content %>
             <%= link_to "My Listings", listings_path(scope: :user, user: current_user.id), class: "dropdown-item" %>
             <%# <a class="dropdown-item" href="#">My Listings</a> %>
@@ -33,6 +33,9 @@
             <%= link_to "Logout", destroy_user_session_path, method: "delete", class: "dropdown-item",role: "button" %>
           </div>
       </span>
+      <% 12.times do %>
+        &nbsp
+      <% end %>
     <% else %>
       <button type="button" class="btn btn-success">Sign in</button>
       <button type="button" class="btn btn-success">Sign up</button>

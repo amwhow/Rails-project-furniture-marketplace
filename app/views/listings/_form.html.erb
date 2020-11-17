@@ -7,10 +7,9 @@
         <div class="form-inputs">
           <%= f.input :title, placeholder: "Describe your items here" %>
           <%= f.input :price, as: :decimal, placeholder: "A$", input_html: { min: '0' } %>
-
           <%# select multiple categories and pass them into the listing %>
-          <%# f.label "Category(select one or more)"%>
-          <%# f.collection_check_boxes :category_ids, Category.all, :id, :name %>
+          <%= f.label "Category(select one or more)"%><br>
+          <%= f.collection_check_boxes :category_ids, Category.all, :id, :name, {}, {:multiple => true} %>
           <%= f.input :condition, as: :select, collection: [['brand new', 'brand new'], ['like new', 'like new'], ['good condition', 'good condition'], ['fair condition', 'fair condition']] %>
           <%= f.input :description, :input_html => {:rows => 7}, placeholder: "In 300 words" %>
           <%= f.input :location, placeholder: "format: street, city, country"%>
