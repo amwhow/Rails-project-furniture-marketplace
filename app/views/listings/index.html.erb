@@ -13,34 +13,23 @@
       <%= f.text_field :location, class:"form-control mr-sm-4", type: "search", style: "margin-bottom: 20px";%>
 
       <h5>Filter by</h5>
-      <div class="row justify-content-start form-group">
-        <div class="col-md-2">
-          <%= f.label :category %>:<br>
-          <%= f.select :category, Category.all.map {|category| category.name}, class: "form-control", id:"category", :include_blank => true %>
+      <div class="form-group">
+        <%= f.label :category %>:
+        <%= f.select :category, Category.all.map {|category| category.name}, class: "form-control", id:"category", :include_blank => true %>
+        <br>
+        <%= f.label :condition %>:
+        <%= f.select :condition, [ 'brand new', 'like new', 'good condition', 'fair condition'], :include_blank => true, class: "form-control"  %>
+        <br>
+          min price:
+          <%= f.number_field :min, class: "form-control col-1" %>
+          max price:
+          <%= f.number_field :max, class: "form-control col-1" %>
         </div>
-        <div class="col-md-2">
-          <%= f.label :condition %>:<br>
-          <%= f.select :condition, [ 'brand new', 'like new', 'good condition', 'fair condition'], :include_blank => true, class: "form-control"  %>
-        </div>
-        <div class="col-md-3">
-          <div class="row">
-            <div class="col">
-              min price:
-              <%= f.number_field :min, class: "form-control" %>
-            </div>
-            <div class="col">
-              max price:
-              <%= f.number_field :max, class: "form-control" %>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <%= f.label :delivery %>
-          <br>
-          <%= f.radio_button :delivery, true %> Availavle
-          <%= f.radio_button :delivery, false %> Not availavle
-        </div>
-      </div>
+        <%= f.label :delivery %>:
+        <br>
+        <%= f.radio_button :delivery, true %> Availavle
+        <%= f.radio_button :delivery, false %> Not availavle
+      
       <br>
       <div class="row justify-content-center">
         <%= f.submit "Search", class:"btn btn-primary" %>
@@ -54,6 +43,8 @@
       <h1 class="text-center">My listings</h1>
     <% elsif params[:cat_name].present? %>
       <h1 class="text-center">Listings under "<%= params[:cat_name].capitalize %>" Category</h1>
+    <% elsif params[:search].present? %>
+      <h1 class="text-center">Search Result:</h1>
     <% end %>
     <br>
     <br>
