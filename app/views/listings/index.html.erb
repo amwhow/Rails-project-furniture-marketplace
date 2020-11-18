@@ -2,98 +2,100 @@
   <p id="notice"><%= notice %></p>
 
   <%# search bar %>
-  <h1 class="text-center">Up for anything? Search it here!</h1>
-  <br>
-  <%= form_with(scope: :search, model: @listing, method: 'get', local: true) do |f|%>
-    <div class="justify-content-start form-group" >
-      <h5>Search by title</h5>
-      <%= f.text_field :title, class:"form-control mr-sm-4", type: "search", placeholder: "I am looking for...", style: "margin-bottom: 20px";%>
+  <div class="container-fluid">
+    <h1 class="text-center">Up for anything? Search it here!</h1>
+    <br>
+    <%= form_with(scope: :search, model: @listing, method: 'get', local: true) do |f|%>
+      <div class="justify-content-start form-group" >
+        <h5>Search by title</h5>
+        <%= f.text_field :title, class:"form-control mr-sm-4", type: "search", placeholder: "I am looking for...", style: "margin-bottom: 20px";%>
 
-      <h5>Search by location</h5>
-      <%= f.text_field :location, class:"form-control mr-sm-4", type: "search", style: "margin-bottom: 20px";%>
+        <h5>Search by location</h5>
+        <%= f.text_field :location, class:"form-control mr-sm-4", type: "search", style: "margin-bottom: 20px";%>
 
-      <h5>Filter by</h5>
-      <div class="form-group">
-        <%= f.label :category %>:
-        <%= f.select :category, Category.all.map {|category| category.name}, class: "form-control", id:"category", :include_blank => true %>
+        <h5>Filter by</h5>
+        <div class="form-group">
+          <%= f.label :category %>:
+          <%= f.select :category, Category.all.map {|category| category.name}, class: "form-control", id:"category", :include_blank => true %>
+          <br>
+          <%= f.label :condition %>:
+          <%= f.select :condition, [ 'brand new', 'like new', 'good condition', 'fair condition'], :include_blank => true, class: "form-control"  %>
+          <br>
+            <%= f.label "min price:" %>
+            <%= f.number_field :min, class: "form-control col-1" %>
+            max price:
+            <%= f.number_field :max, class: "form-control col-1" %>
+          </div>
+          <%= f.label :delivery %>:
+          <br>
+          <%= f.radio_button :delivery, true %> Availavle
+          <%= f.radio_button :delivery, false %> Not availavle
+        
         <br>
-        <%= f.label :condition %>:
-        <%= f.select :condition, [ 'brand new', 'like new', 'good condition', 'fair condition'], :include_blank => true, class: "form-control"  %>
-        <br>
-          min price:
-          <%= f.number_field :min, class: "form-control col-1" %>
-          max price:
-          <%= f.number_field :max, class: "form-control col-1" %>
+        <div class="row justify-content-center">
+          <%= f.submit "Search", class:"btn btn-primary" %>
         </div>
-        <%= f.label :delivery %>:
-        <br>
-        <%= f.radio_button :delivery, true %> Availavle
-        <%= f.radio_button :delivery, false %> Not availavle
-      
-      <br>
-      <div class="row justify-content-center">
-        <%= f.submit "Search", class:"btn btn-primary" %>
       </div>
-    </div>
-  <% end %>
-
-    <br>
-    <br>
-    <% if params[:user].present? %>
-      <h1 class="text-center">My listings</h1>
-    <% elsif params[:cat_name].present? %>
-      <h1 class="text-center">Listings under "<%= params[:cat_name].capitalize %>" Category</h1>
-    <% elsif params[:search].present? %>
-      <h1 class="text-center">Search Result:</h1>
     <% end %>
-    <br>
-    <br>
+
+      <br>
+      <br>
+      <% if params[:user].present? %>
+        <h1 class="text-center">My listings</h1>
+      <% elsif params[:cat_name].present? %>
+        <h1 class="text-center">Listings under "<%= params[:cat_name].capitalize %>" Category</h1>
+      <% elsif params[:search].present? %>
+        <h1 class="text-center">Search Result:</h1>
+      <% end %>
+  </div>
 
   <%# listings section %>
-  <div class="row justify-content-start">
-    <% @listings.each do |listing| %>
-      <div class="card col-sm-4 my-2">
-        <%# row for main card content %>
-  
-          <% if listing.images.attached? %>
-            <%= image_tag listing.images.first, class:"card-img-top", alt:"listing previewimage", width: "250" %>
-          <% else %>
-            <%= image_tag "no_image", class:"card-img-top", alt:"listing preview image",width: "250" %>
-          <% end %>
-          <div class="card-body col-sm-12">
-            <h5 class="card-title"><%= listing.title %></h5>
-            <p> 
-            Category:
-            <% listing.categories.each do |category| %>
-            <%= link_to category.name.capitalize, listings_path(scope: :cat_name, cat_name: category.name) %>
-            <% end %>
-            </p>
-            <p class="card-text">Price: $<%= listing.price %></p>
-            <p class="card-text">Delivery: 
-            <% if listing.delivery == true %>
-              available
+  <div class="container-fluid">
+    <div class="row justify-content-start">
+      <% @listings.each do |listing| %>
+        <div class="card col-sm-4 my-2">
+          <%# row for main card content %>
+    
+            <% if listing.images.attached? %>
+              <%= image_tag listing.images.first, class:"card-img-top", alt:"listing previewimage", width: "250" %>
             <% else %>
-              not available
+              <%= image_tag "no_image", class:"card-img-top", alt:"listing preview image",width: "250" %>
             <% end %>
-            </p>
-            <p class="card-text">Location: <%= listing.location %></p>
-            <p class="card-text">Created at: <%= listing.created_at.to_date %></p>
-
-          <%# row for bottom buttons %>
-            <div class="row justify-content-between align-items-end">
-              <div class="column-sm-6">
-                <%= link_to 'See datails', listing_path(listing.id), class: "btn btn-primary"%>
-              </div>
-              <% if listing.user_id == current_user.id %>
-                <div class="column-sm-6">
-                  <%= link_to (image_tag 'edit_icon'), edit_listing_path(listing) %>
-                  <%= link_to (image_tag 'delete_icon'), listing, method: :delete, data: { confirm: 'Are you sure?' }  %>
-                </div>
+            <div class="card-body col-sm-12">
+              <h5 class="card-title"><%= listing.title %></h5>
+              <p> 
+              Category:
+              <% listing.categories.each do |category| %>
+              <%= link_to category.name.capitalize, listings_path(scope: :cat_name, cat_name: category.name) %>
               <% end %>
+              </p>
+              <p class="card-text">Price: $<%= listing.price %></p>
+              <p class="card-text">Delivery: 
+              <% if listing.delivery == true %>
+                available
+              <% else %>
+                not available
+              <% end %>
+              </p>
+              <p class="card-text">Location: <%= listing.location %></p>
+              <p class="card-text">Created at: <%= listing.created_at.to_date %></p>
+
+            <%# row for bottom buttons %>
+              <div class="row justify-content-between align-items-end">
+                <div class="column-sm-6">
+                  <%= link_to 'See datails', listing_path(listing.id), class: "btn btn-primary"%>
+                </div>
+                <% if listing.user_id == current_user.id %>
+                  <div class="column-sm-6">
+                    <%= link_to (image_tag 'edit_icon'), edit_listing_path(listing) %>
+                    <%= link_to (image_tag 'delete_icon'), listing, method: :delete, data: { confirm: 'Are you sure?' }  %>
+                  </div>
+                <% end %>
+              </div>
             </div>
-          </div>
-      </div>
-    <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
 
   <br>
