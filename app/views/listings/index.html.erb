@@ -4,9 +4,39 @@
   <%# search bar %>
   <h1 class="text-center">Up for anything? Search it here!</h1>
   <br>
-  <%= form_with(scope: :search, url: listings_path, method: 'get', local: true) do |f|%>
-    <div class="row justify-content-center" >
+  <%= form_with(scope: :search, model: @listing, method: 'get', local: true) do |f|%>
+    <div class=" justify-content-start" >
+      <h5>Search by title</h5>
       <%= f.text_field :title, class:"form-control mr-sm-4", type: "search", placeholder: "I am looking for...", style: "margin-bottom: 20px";%>
+
+      <h5>Search by location</h5>
+      <%= f.text_field :title, class:"form-control mr-sm-4", type: "search", style: "margin-bottom: 20px";%>
+
+      <h5>Filter by</h5>
+      <div class="row justify-content-around form-group">
+        <div class="col-md-3">
+          <%= f.label :category %>
+          <%= f.select :category, Category.all.map {|category| category.name}, :include_blank => true, class: "form-control" %>
+        </div>
+        <div class="col-md-3">
+          <%= f.label :condition %>
+          <%= f.select :condition, [ 'brand new', 'like new', 'good condition', 'fair condition'], :include_blank => true %>
+        </div>
+        <div class="col-md-3">
+          <%= f.label :price %>
+          from:
+          <%= f.number_field :min, class: "form-control cols=25" %>
+          to:
+          <%= f.number_field :max,class: "form-control cols=25" %>
+        </div>
+        <div class="col-md-3">
+          <%= f.label :delivery %>
+          <br>
+          <%= f.radio_button :delivery, true %> Availavle
+          <%= f.radio_button :delivery, false %> Not availavle
+        </div>
+      </div>
+      <br>
       <%= f.submit "Search", class:"btn btn-primary" %>
     </div>
   <% end %>

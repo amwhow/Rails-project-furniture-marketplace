@@ -9,6 +9,10 @@ class Listing < ApplicationRecord
   geocoded_by :location
   after_validation :geocode
   has_many :savelistings, dependent: :destroy
-  scope :search_by_title, -> (title) {where('title ILIKE ?', "%#{title}%") }
 
+  scope :search_by_title, -> (title) {where('title ILIKE ?', "%#{title}%") }
+  scope :search_by_category, -> (category) { joins(:categories).merge(Category.where('categories.name ILIKE ?', "%#{category}%")) }
+  scope :search_by_condition, -> (condition) {where('condition ILIKE ?', "%#{condition}%") }
+  scope :price_range, -> (min, max) { where('price > ? AND price < ?', min, max)}
+  scope :search_by_delivery, -> (delivery) { where('delivery = ?', delivery) }
 end
