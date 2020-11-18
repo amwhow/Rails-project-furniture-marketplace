@@ -5,11 +5,16 @@ class ListingsController < ApplicationController
   # GET /listings.json
   def index
     if params[:search].present?
+      # search and filter by multiple conditions
       @listings = Listing.where(nil)
       @listings = @listings.search_by_title(params[:search][:title]) if params[:search][:title].present?
+      @listings = @listings.search_by_location(params[:search][:location]) if params[:search][:location].present?
       @listings = @listings.search_by_condition(params[:search][:condition]) if params[:search][:condition].present?
       @listings = @listings.search_by_category(params[:search][:category]) if params[:search][:category].present?
-      @listings = @listings.price_range(params[:search][:min], params[:search][:max]) if params[:search][:min].present? || params[:search][:max].present?
+
+      @listings = @listings.min_price(params[:search][:min]) if params[:search][:min].present?
+      @listings = @listings.max_price(params[:search][:max]) if params[:search][:max].present?
+
       @listings = @listings.search_by_delivery(params[:search][:delivery]) if params[:search][:delivery].present?
     elsif params[:user].present?
       @listings = current_user.listings 

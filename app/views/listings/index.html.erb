@@ -5,29 +5,34 @@
   <h1 class="text-center">Up for anything? Search it here!</h1>
   <br>
   <%= form_with(scope: :search, model: @listing, method: 'get', local: true) do |f|%>
-    <div class=" justify-content-start" >
+    <div class="justify-content-start form-group" >
       <h5>Search by title</h5>
       <%= f.text_field :title, class:"form-control mr-sm-4", type: "search", placeholder: "I am looking for...", style: "margin-bottom: 20px";%>
 
       <h5>Search by location</h5>
-      <%= f.text_field :title, class:"form-control mr-sm-4", type: "search", style: "margin-bottom: 20px";%>
+      <%= f.text_field :location, class:"form-control mr-sm-4", type: "search", style: "margin-bottom: 20px";%>
 
       <h5>Filter by</h5>
-      <div class="row justify-content-around form-group">
-        <div class="col-md-3">
-          <%= f.label :category %>
-          <%= f.select :category, Category.all.map {|category| category.name}, :include_blank => true, class: "form-control" %>
+      <div class="row justify-content-start form-group">
+        <div class="col-md-2">
+          <%= f.label :category %>:<br>
+          <%= f.select :category, Category.all.map {|category| category.name}, class: "form-control", id:"category", :include_blank => true %>
+        </div>
+        <div class="col-md-2">
+          <%= f.label :condition %>:<br>
+          <%= f.select :condition, [ 'brand new', 'like new', 'good condition', 'fair condition'], :include_blank => true, class: "form-control"  %>
         </div>
         <div class="col-md-3">
-          <%= f.label :condition %>
-          <%= f.select :condition, [ 'brand new', 'like new', 'good condition', 'fair condition'], :include_blank => true %>
-        </div>
-        <div class="col-md-3">
-          <%= f.label :price %>
-          from:
-          <%= f.number_field :min, class: "form-control cols=25" %>
-          to:
-          <%= f.number_field :max,class: "form-control cols=25" %>
+          <div class="row">
+            <div class="col">
+              min price:
+              <%= f.number_field :min, class: "form-control" %>
+            </div>
+            <div class="col">
+              max price:
+              <%= f.number_field :max, class: "form-control" %>
+            </div>
+          </div>
         </div>
         <div class="col-md-3">
           <%= f.label :delivery %>
@@ -37,7 +42,9 @@
         </div>
       </div>
       <br>
-      <%= f.submit "Search", class:"btn btn-primary" %>
+      <div class="row justify-content-center">
+        <%= f.submit "Search", class:"btn btn-primary" %>
+      </div>
     </div>
   <% end %>
 
@@ -70,7 +77,7 @@
             <%= link_to category.name.capitalize, listings_path(scope: :cat_name, cat_name: category.name) %>
             <% end %>
             </p>
-            <p class="card-text">Price: <%= listing.price %></p>
+            <p class="card-text">Price: $<%= listing.price %></p>
             <p class="card-text">Delivery: 
             <% if listing.delivery == true %>
               available
