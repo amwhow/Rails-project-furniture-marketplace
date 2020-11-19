@@ -2,12 +2,15 @@ class SavelistingsController < ApplicationController
   before_action :find_listing 
   before_action :find_savelisting, only: [:destroy] 
 
+  # create savelistings and link it to the current user
   def create 
     @listing.savelistings.create(user_id: current_user.id)
     redirect_to @listing
   end 
 
+  
   def destroy
+    # prevent bugs
     if !(already_save?)
       flash[:notice] = "Cannot unlike"
     else
@@ -18,6 +21,7 @@ class SavelistingsController < ApplicationController
 
   private 
 
+  # examine if there is a record linked to both current user and current listing
   def already_save?
     Savelisting.where(user_id: current_user.id, listing_id:
     params[:listing_id]).exists?

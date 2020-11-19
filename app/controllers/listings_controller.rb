@@ -5,24 +5,27 @@ class ListingsController < ApplicationController
   # GET /listings
   # GET /listings.json
   def index
+    # use scope to identify 'search' function and 'filter by multiple conditions' function
     if params[:search].present?
-      # search and filter by multiple conditions
       @listings = Listing.where(nil)
       @listings = @listings.search_by_title(params[:search][:title]) if params[:search][:title].present?
       @listings = @listings.search_by_location(params[:search][:location]) if params[:search][:location].present?
       @listings = @listings.search_by_condition(params[:search][:condition]) if params[:search][:condition].present?
       @listings = @listings.search_by_category(params[:search][:category]) if params[:search][:category].present?
-
+      # created two queries so that price can receive either one or two conditions 
       @listings = @listings.min_price(params[:search][:min]) if params[:search][:min].present?
       @listings = @listings.max_price(params[:search][:max]) if params[:search][:max].present?
 
       @listings = @listings.search_by_delivery(params[:search][:delivery]) if params[:search][:delivery].present?
-      
+
+    # :user is a scope data to identify the action of go to 'my listing' page  
     elsif params[:user].present?
       @listings = User.find(params[:user]).listings 
+    # :cat_name is a scope data to identify the action of clicking on category label 
     elsif params[:cat_name].present?
       @listings = Category.find_by_name(params[:cat_name]).listings
     else
+    # if none of the above scope data appears, show all listings
       @listings = Listing.all
     end
 
@@ -37,13 +40,11 @@ class ListingsController < ApplicationController
   # GET /listings/1
   # GET /listings/1.json
   def show
+    # locate the specific listing by id
     @listing = Listing.find(params[:id])
-    # @proximity = Listing.near([@listing.latitude, @listing.longitude], 50)
-    # @proximity.length > 1 ? "There are #{@proximity.length - 1} listings within 50kms" : "There are no listing nearby"
     if params[:type] == "json"
       render json: {data: [@listing.latitude, @listing.longitude], center: [@listing.latitude, @listing.longitude]}
     end
-    
   end
 
   # GET /listings/new
@@ -106,7 +107,7 @@ class ListingsController < ApplicationController
     def listing_params
       params.require(:listing).permit(:delivery, :location, :description, :price, :title, :condition, :search, :phone, category_ids:[], images: [])
     end
-
+    # for the case if non-admin user want to see dashboard via entering the url
     def admin_access 
       unless current_user.admin? 
         redirect_to root_path, notice: "You aren't allowed to view this page"

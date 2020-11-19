@@ -1,4 +1,3 @@
-<%# modal here %>
 <div class="modal fade" id="showuserlistingModal" tabindex="-1" role="dialog" aria-labelledby="showuserlistingModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -39,7 +38,6 @@
           <% end %>
         <% end %>
       </div>
-
       <%# no arrow appear if only one image %>
       <% if @listing.images.length != 1 %>
         <a class="carousel-control-prev" href="#carouselExampleControls"role="button" data-slide="prev">
@@ -111,9 +109,8 @@
       </p>
       <p>
         <h5>Location:</h5>
-        <%# @listing.location %>
       </p>
-
+      <%# map %>
       <div style="height: 300px; width: 300px" id="map"></div>
       <%= javascript_pack_tag "leaflet/show" %>
 
@@ -126,7 +123,7 @@
         <% end %>
         <%= @listing.user.name %>&nbsp&nbsp&nbsp&nbsp&nbsp
 
-        <%# link to a user's posts(in a pop-up) %>
+        <%# link to a user's posts(on a pop-up) %>
         <a role="button" class="badge" data-toggle="modal" data-target="#showuserlistingModal">
           <%= "has #{@listing.user.listings.length} #{@listing.user.listings.length <= 1 ? "post" : "posts"}" %>
         </a>

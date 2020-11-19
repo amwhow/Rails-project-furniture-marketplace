@@ -7,7 +7,7 @@
   
     <%# show a user's saved listings %>
     <% @saved_listings.each do |listing| %>
-      <%# repetitive to listing index page %>
+      <%# repetitive to the listing index page from this point%>
       <div class="card col-sm-4  my-2">
         <% if listing.images.attached? %>
           <%= image_tag listing.images.first, class:"card-img-top", alt:"listing previewimage", width: "250" %>

@@ -41,10 +41,13 @@
 
         <br>
         <br>
+        <%# for my listings scenario %>
         <% if params[:user].present? %>
           <h1 class="text-center">My listings</h1>
+        <%# for clicking on category label scenario %>
         <% elsif params[:cat_name].present? %>
           <h1 class="text-center">Listings under "<%= params[:cat_name].capitalize %>" Category</h1>
+        <%# for searching scenario %>
         <% elsif params[:search].present? %>
           <h1 class="text-center">Search Result:</h1>
         <% end %>
@@ -80,7 +83,6 @@
               <p class="card-text">Location: <%= listing.location %></p>
               <p class="card-text">Created at: <%= listing.created_at.to_date %></p>
 
-            <%# row for bottom buttons %>
               <div class="row justify-content-between align-items-end">
                 <div class="column-sm-6">
                   <%= link_to 'See datails', listing_path(listing.id), class: "btn btn-primary"%>
@@ -106,7 +108,7 @@
         <%= link_to "Back", listings_path, class: "btn btn-primary",role: "button" %>
       <% end %>
   </div>
-
+  <%# my listing scenario %>
   <% if params[:user].present? && !params[:admin].present? %>
     <br>
     <br>
@@ -117,10 +119,10 @@
     <div class="row justify-content-center">
       <%= link_to "Back", listings_path, class: "btn btn-primary",role: "button" %>
     </div>
+  <%# admin dashboard scenario %>
   <% elsif params[:user].present? && params[:admin].present? %>
     <div class="row justify-content-center">
       <%= link_to "Back", dashboard_path, class: "btn btn-primary",role: "button" %>
     </div>
   <% end %>
-  
 </div>

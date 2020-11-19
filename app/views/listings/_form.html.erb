@@ -7,6 +7,7 @@
         <div class="form-inputs">
           <%= f.input :title, placeholder: "Describe your items here" %>
           <%= f.input :price, as: :decimal, placeholder: "A$", input_html: { min: '0' } %>
+
           <%# select multiple categories and pass them into the listing %>
           <%= f.label "Category(select one or more)"%><br>
           <%= f.collection_check_boxes :category_ids, Category.all, :id, :name, {}, {:multiple => true } %>
@@ -19,7 +20,6 @@
           <%= f.file_field :images, multiple: true%>
           <br>
           <br>
-
         </div>
 
         <div class="form-actions">

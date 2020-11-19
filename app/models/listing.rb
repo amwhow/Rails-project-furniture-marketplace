@@ -10,6 +10,7 @@ class Listing < ApplicationRecord
   after_validation :geocode
   has_many :savelistings, dependent: :destroy
 
+  # identify different search actions
   scope :search_by_title, -> (title) {where('title ILIKE ?', "%#{title}%") }
   scope :search_by_location, -> (location) {where('location ILIKE ?', "%#{location}%") }
   scope :search_by_category, -> (category) { joins(:categories).merge(Category.where('categories.name ILIKE ?', "%#{category}%")) }

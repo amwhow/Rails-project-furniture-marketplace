@@ -1,3 +1,4 @@
+<%# blank if a non-admin user enters this dashboard page %>
 <% if current_user.try(:admin?) %>
   <div class="container-fluid bg-light"> 
     <%# title row %>
@@ -13,7 +14,7 @@
     </div>
     <br>
 
-    <%# main function section %>
+    <%# users section %>
     <div class="card">
       <h5 class="card-header">Users</h5>
       <div class="card-body">
@@ -32,7 +33,6 @@
           <% User.where(admin:false).sort.each do |user| %>
           <tr>
             <th><%= user.name %></th>
-            <%# link_to listing.title, listing_path(listing.id, scope: :admin, admin: "admin") %>
             <td><%= user.email %></td>
             <td>
               <% if user.avatar.attached? %>
@@ -63,6 +63,7 @@
     <br>
     <br>
 
+    <%# listings section %>
     <div class="card">
       <h5 class="card-header">Listings</h5>
       <div class="card-body">
