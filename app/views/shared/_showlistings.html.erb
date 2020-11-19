@@ -12,7 +12,7 @@
         <% if listing.images.attached? %>
           <%= image_tag listing.images.first, class:"card-img-top", alt:"listing previewimage", width: "250" %>
         <% else %>
-          <%= image_tag "logo", class:"card-img-top", alt:"listing preview image",width: "250" %>
+          <%= image_tag "no_image", class:"card-img-top", alt:"listing preview image",width: "250" %>
         <% end %>
           <div class="card-body">
             <h5 class="card-title"><%= listing.title %></h5>
