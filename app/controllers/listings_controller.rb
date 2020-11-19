@@ -1,5 +1,6 @@
 class ListingsController < ApplicationController
   before_action :set_listing, only: [:show, :edit, :update, :destroy]
+  before_action :admin_access, only: [:admin]
 
   # GET /listings
   # GET /listings.json
@@ -16,6 +17,7 @@ class ListingsController < ApplicationController
       @listings = @listings.max_price(params[:search][:max]) if params[:search][:max].present?
 
       @listings = @listings.search_by_delivery(params[:search][:delivery]) if params[:search][:delivery].present?
+      
     elsif params[:user].present?
       @listings = current_user.listings 
     elsif params[:cat_name].present?
@@ -94,6 +96,8 @@ class ListingsController < ApplicationController
     end
   end
 
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_listing
@@ -103,5 +107,11 @@ class ListingsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def listing_params
       params.require(:listing).permit(:delivery, :location, :description, :price, :title, :condition, :search, :phone, category_ids:[], images: [])
+    end
+
+    def admin_access 
+      unless current_user.admin? 
+        redirect_to root_path, notice: "You aren't allowed to view this page"
+      end
     end
 end

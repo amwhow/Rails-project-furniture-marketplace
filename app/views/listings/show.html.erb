@@ -68,7 +68,14 @@
             <%= link_to (image_tag 'save_icon'), listing_savelistings_path(@listing), method: "post" %>
           <% end %>
         <% end %>
-        <%= link_to 'Back', listings_path, class: "btn btn-primary",role: "button"%>
+
+        <%# navigate the back button responsively %>
+        <% if params[:admin].present? %>
+          <%= link_to 'Back', dashboard_path, class: "btn btn-primary",role: "button"%>
+          <% else %>
+          <%= link_to 'Back', listings_path, class: "btn btn-primary",role: "button"%>
+        <% end %>
+
         </span>
       </h1>
       <p>

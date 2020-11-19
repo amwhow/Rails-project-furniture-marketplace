@@ -54,8 +54,6 @@
     <div class="row justify-content-start">
       <% @listings.each do |listing| %>
         <div class="card col-sm-4 my-2">
-          <%# row for main card content %>
-    
             <% if listing.images.attached? %>
               <%= image_tag listing.images.first, class:"card-img-top", alt:"listing previewimage", width: "250" %>
             <% else %>

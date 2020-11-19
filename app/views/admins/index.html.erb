@@ -1,0 +1,116 @@
+
+<% if current_user.try(:admin?) %>
+  <div class="container-fluid bg-light"> 
+    <%# title row %>
+    <div class="row justify-content-between align-items-center mt-5">
+      <div class="col-md-3">
+        <h1>Welcome, admin</h1>
+      </div>
+      <div class="col-md-3">
+        <div class="row justify-content-end">
+          <p>Last login:<%= current_user.last_sign_in_at.strftime "%Y-%m-%d %H:%M:%S %Z" %> &nbsp&nbsp&nbsp</p>
+        </div>
+      </div>
+    </div>
+    <br>
+
+    <%# main function section %>
+    <div class="card">
+      <h5 class="card-header">Users</h5>
+      <div class="card-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Has avatar</th>
+            <th scope="col">Created at</th>
+            <th scope="col">Updated at</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% User.where(admin:false).sort.each do |user| %>
+          <tr>
+            <th><%= user.name %></th>
+            <%# link_to listing.title, listing_path(listing.id, scope: :admin, admin: "admin") %>
+            <td><%= user.email %></td>
+            <td>
+              <% if user.avatar.attached? %>
+              Yes
+              <% else %>
+              No 
+              <% end %>
+            </td>
+            <td><%= user.created_at %></td>
+            <td><%= user.updated_at %></td>
+            <td>
+              <%= link_to (image_tag 'edit_icon'), listings_path %>
+              <%= link_to (image_tag 'delete_icon'), listings_path %>
+              <% if user.listings.present? %>
+                <%= link_to "See listings", listings_path %>
+              <% end %>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+          <div class="card-footer text-muted">
+            Total users: <%= User.where(admin:false).length%>
+          </div>
+      </div>
+    </div>
+
+    <br>
+    <br>
+
+    <div class="card">
+      <h5 class="card-header">Listings</h5>
+      <div class="card-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Price</th>
+            <th scope="col">Delivery</th>
+            <th scope="col">Location</th>
+            <th scope="col">Has image</th>
+            <th scope="col">Created at</th>
+            <th scope="col">Updated at</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% Listing.all.sort.each do |listing| %>
+          <tr>
+            <th><%= link_to listing.title, listing_path(listing.id, scope: :admin, admin: "admin") %></th>
+            <td><%= listing.price %></td>
+            <td><%= listing.delivery %></td>
+            <td><%= listing.location %></td>
+            <td>
+              <% if listing.images.attached? %>
+              Yes
+              <% else %>
+              No 
+              <% end %>
+            </td>
+            <td><%= listing.created_at %></td>
+            <td><%= listing.updated_at %></td>
+            <td>
+            <%= link_to (image_tag 'edit_icon'), edit_listing_path(listing) %>
+            <%= link_to (image_tag 'delete_icon'), listing, method: :delete, data: { confirm: 'Are you sure?' } %>
+
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+          <div class="card-footer text-muted">
+            Total listings: <%= Listing.all.length%>
+          </div>
+      </div>
+    </div>
+  </div>
+<% else %>
+  
+<% end %>
