@@ -26,7 +26,11 @@
           <%= f.button :submit, class: "btn btn-primary"%>
         </div>
         <br>
-        <%= link_to 'Back', listings_path, class: "btn btn-primary"%>
+        <% if params[:admin].present? %>
+          <%= link_to 'Back', dashboard_path, class: "btn btn-primary"%>
+        <% else %>
+          <%= link_to 'Back', listings_path, class: "btn btn-primary"%>
+        <% end %>
       <% end %>
     </div>
   </div>

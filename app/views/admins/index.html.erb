@@ -96,7 +96,7 @@
             <td><%= listing.created_at %></td>
             <td><%= listing.updated_at %></td>
             <td>
-            <%= link_to (image_tag 'edit_icon'), edit_listing_path(listing) %>
+            <%= link_to (image_tag 'edit_icon'), edit_listing_path(listing, scope: :admin, admin:"admin") %>
             <%= link_to (image_tag 'delete_icon'), listing, method: :delete, data: { confirm: 'Are you sure?' } %>
 
             </td>
