@@ -1,53 +1,55 @@
 <div class="container">
   <p id="notice"><%= notice %></p>
 
-  <%# search bar %>
-  <div class="container-fluid">
-    <h1 class="text-center">Up for anything? Search it here!</h1>
-    <br>
-    <%= form_with(scope: :search, model: @listing, method: 'get', local: true) do |f|%>
-      <div class="justify-content-start form-group" >
-        <h5>Search by title</h5>
-        <%= f.text_field :title, class:"form-control mr-sm-4", type: "search", placeholder: "I am looking for...", style: "margin-bottom: 20px";%>
+  <% if !params[:admin].present? %>
+    <%# search bar %>
+    <div class="container-fluid">
+      <h1 class="text-center">Up for anything? Search it here!</h1>
+      <br>
+      <%= form_with(scope: :search, model: @listing, method: 'get', local: true) do |f|%>
+        <div class="justify-content-start form-group" >
+          <h5>Search by title</h5>
+          <%= f.text_field :title, class:"form-control mr-sm-4", type: "search", placeholder: "I am looking for...", style: "margin-bottom: 20px";%>
 
-        <h5>Search by location</h5>
-        <%= f.text_field :location, class:"form-control mr-sm-4", type: "search", style: "margin-bottom: 20px";%>
+          <h5>Search by location</h5>
+          <%= f.text_field :location, class:"form-control mr-sm-4", type: "search", style: "margin-bottom: 20px";%>
 
-        <h5>Filter by</h5>
-        <div class="form-group">
-          <%= f.label :category %>:
-          <%= f.select :category, Category.all.map {|category| category.name}, class: "form-control", id:"category", :include_blank => true %>
+          <h5>Filter by</h5>
+          <div class="form-group">
+            <%= f.label :category %>:
+            <%= f.select :category, Category.all.map {|category| category.name}, class: "form-control", id:"category", :include_blank => true %>
+            <br>
+            <%= f.label :condition %>:
+            <%= f.select :condition, [ 'brand new', 'like new', 'good condition', 'fair condition'], :include_blank => true, class: "form-control"  %>
+            <br>
+              <%= f.label "min price:" %>
+              <%= f.number_field :min, class: "form-control col-1" %>
+              max price:
+              <%= f.number_field :max, class: "form-control col-1" %>
+            </div>
+            <%= f.label :delivery %>:
+            <br>
+            <%= f.radio_button :delivery, true %> Availavle
+            <%= f.radio_button :delivery, false %> Not availavle
+          
           <br>
-          <%= f.label :condition %>:
-          <%= f.select :condition, [ 'brand new', 'like new', 'good condition', 'fair condition'], :include_blank => true, class: "form-control"  %>
-          <br>
-            <%= f.label "min price:" %>
-            <%= f.number_field :min, class: "form-control col-1" %>
-            max price:
-            <%= f.number_field :max, class: "form-control col-1" %>
+          <div class="row justify-content-center">
+            <%= f.submit "Search", class:"btn btn-primary" %>
           </div>
-          <%= f.label :delivery %>:
-          <br>
-          <%= f.radio_button :delivery, true %> Availavle
-          <%= f.radio_button :delivery, false %> Not availavle
-        
-        <br>
-        <div class="row justify-content-center">
-          <%= f.submit "Search", class:"btn btn-primary" %>
         </div>
-      </div>
-    <% end %>
-
-      <br>
-      <br>
-      <% if params[:user].present? %>
-        <h1 class="text-center">My listings</h1>
-      <% elsif params[:cat_name].present? %>
-        <h1 class="text-center">Listings under "<%= params[:cat_name].capitalize %>" Category</h1>
-      <% elsif params[:search].present? %>
-        <h1 class="text-center">Search Result:</h1>
       <% end %>
-  </div>
+
+        <br>
+        <br>
+        <% if params[:user].present? %>
+          <h1 class="text-center">My listings</h1>
+        <% elsif params[:cat_name].present? %>
+          <h1 class="text-center">Listings under "<%= params[:cat_name].capitalize %>" Category</h1>
+        <% elsif params[:search].present? %>
+          <h1 class="text-center">Search Result:</h1>
+        <% end %>
+    </div>
+  <% end %>
 
   <%# listings section %>
   <div class="container-fluid">
@@ -105,7 +107,7 @@
       <% end %>
   </div>
 
-  <% if params[:user].present? %>
+  <% if params[:user].present? && !params[:admin].present? %>
     <br>
     <br>
     <h1 class="text-center">Saved listings</h1>
@@ -114,6 +116,10 @@
     <br>
     <div class="row justify-content-center">
       <%= link_to "Back", listings_path, class: "btn btn-primary",role: "button" %>
+    </div>
+  <% elsif params[:user].present? && params[:admin].present? %>
+    <div class="row justify-content-center">
+      <%= link_to "Back", dashboard_path, class: "btn btn-primary",role: "button" %>
     </div>
   <% end %>
   

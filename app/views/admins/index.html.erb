@@ -1,4 +1,3 @@
-
 <% if current_user.try(:admin?) %>
   <div class="container-fluid bg-light"> 
     <%# title row %>
@@ -45,10 +44,10 @@
             <td><%= user.created_at %></td>
             <td><%= user.updated_at %></td>
             <td>
-              <%= link_to (image_tag 'edit_icon'), listings_path %>
-              <%= link_to (image_tag 'delete_icon'), listings_path %>
+              <%= link_to (image_tag 'edit_icon'), edit_user_registration_path(user) %>
+              <%= link_to (image_tag 'delete_icon'), dashboard_path(scope: :delete_user_id, delete_user_id: user.id), method: :delete, data: { confirm: 'Are you sure?' } %>
               <% if user.listings.present? %>
-                <%= link_to "See listings", listings_path %>
+                <%= link_to "See listings", listings_path(user: user.id, scope: :admin, admin: "admin") %>
               <% end %>
             </td>
           </tr>
@@ -112,5 +111,5 @@
     </div>
   </div>
 <% else %>
-  
+  <h1>You are not allowed to see this page</h1>
 <% end %>

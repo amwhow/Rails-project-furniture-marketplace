@@ -19,7 +19,7 @@ class ListingsController < ApplicationController
       @listings = @listings.search_by_delivery(params[:search][:delivery]) if params[:search][:delivery].present?
       
     elsif params[:user].present?
-      @listings = current_user.listings 
+      @listings = User.find(params[:user]).listings 
     elsif params[:cat_name].present?
       @listings = Category.find_by_name(params[:cat_name]).listings
     else
@@ -95,8 +95,6 @@ class ListingsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-
 
   private
     # Use callbacks to share common setup or constraints between actions.
