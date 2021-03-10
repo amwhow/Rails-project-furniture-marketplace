@@ -13,17 +13,17 @@ This is a Facebook-Marketplace-like app but specific to second-hand furniture tr
 
 ## Screenshots
 welcome page:
-   ![welcome page](docs/welcome.png)  
+   ![](app/assets/images/welcome.png)  
 listings page:
-   ![listings page](docs/listings.png)  
+   ![listings page](app/assets/images/listings.png)  
 listing show page:
-   ![listing show page](docs/listing_show.png)  
+   ![listing show page](app/assets/images/listing_show.png)  
 my_listing:
-   ![my_listing](docs/my_listing.png)  
+   ![my_listing](app/assets/images/my_listing.png)  
 edit_profile:
-   ![edit_profile](docs/edit_profile.png)  
+   ![edit_profile](app/assets/images/edit_profile.png)  
 admin_dashboard:
-   ![admin_dashboard](docs/admin_dashboard.png)  
+   ![admin_dashboard](app/assets/images/admin_dashboard.png)  
    
 
 ## Technologies
